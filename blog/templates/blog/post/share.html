@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}  
+  
+{% block title %}Поделиться постом{% endblock %}  
+  
+{% block content %} 
+  {% if sent %}  
+  <div class="images1234">
+    <h1>отправлен на e-mail</h1>  
+    <p>  
+      "{{ post.title }}" отправлен {{ form.cleaned_data.to }}.  
+    </p>  
+  </div>
+  <br>
+  <h4>Блог:</h4>
+  <form action="/blog">
+    <button type="submit"  class="btn btn-info  " >Блог</button>
+  </form>
+  {% else %}  
+  <div class="images1234">
+    <h1>Поделись постом "{{ post.title }}" на e-mail</h1>  
+    <form action="." method="post">  
+      {{ form.as_p }}  
+      {% csrf_token %}  
+      <button type="submit" class="btn btn-secondary">Отправить</button> 
+    </form>  
+    <br>
+    <h4>Блог:</h4>
+    <form action="/blog">
+      <button type="submit"  class="btn btn-info  " >Блог</button>
+    </form>
+  </div>
+  {% endif %}  
+{% endblock %}

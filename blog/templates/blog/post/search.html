@@ -1,0 +1,49 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Найти{% endblock %}
+
+{% block content %}
+  {% if query %}
+  <div class="images1234">
+    <h1>Посты с названием  "{{ query }}"</h1>
+    <h3>
+      {% with results.count as total_results %}
+	    Найдено {{ total_results }} результатов{{ total_results|pluralize }}
+      {% endwith %}
+    </h3>
+    {% for post in results %}
+      <h4><a href="{{ post.get_absolute_url }}" style="color:white;">{{ post.title }}</a></h4>
+      {{ post.body|truncatewords:5 }}
+    {% empty %}
+      <p>По вашему запросу ничего не найдено.</p>
+    {% endfor %}
+    <p><a href="{% url 'post_search' %}" style="color:white;">Вернуться назад</a></p>
+  </div>
+  {% else %}
+  <div class="images1234">
+    <h1>Поиск постов</h1>
+    <form action="." method="get" >
+      <div  class="rounded">
+        {{ form.as_p }}
+      </div>
+      <div class="col-12">
+        <div class="col-12">
+            <button type="submit" class="btn btn-secondary ">Поиск</button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <h2>Блог:</h2>
+    <br>
+    <form action="/blog">
+      <button type="submit"  class="btn btn-primary btn-lg " >Блог</button>
+    </form>
+    <br>
+    <h2>Идея сайта:</h2>
+    <br>
+    <form action="http://127.0.0.1:8000">
+      <button type="submit"  class="btn btn-warning btn-lg">Идея сайта</button>
+    </form> 
+  </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}  
+{% load blog_tags %}
+{% load static %}
+<link href="{% static 'css/blog.css' %}" rel="stylesheet"> 
+{% block title %}Мой блог{% endblock %}  
+  
+{% block content %}
+  <div class="images1234 ">
+    <h1>Мой блог</h1>
+    {% if tag %}  
+      <h2>Посты с тэгом "{{ tag.name }}"</h2>  
+    {% endif %}
+    {% for post in posts %}
+      <h3>  
+        <a href="{{ post.get_absolute_url }}" style="color:white;">   
+         {{ post.title }}
+        </a>  
+      </h3>
+      <p class="tags">Тэги: {{ post.tags.all|join:", " }}</p>
+      <p class="date">  
+        Опубликован {{ post.publish }}  {{ post.author }}ом
+      </p>  
+      {{ post.body|truncatewords:30|linebreaks }}
+    {% endfor %}  
+    {% include "pagination.html" with page=posts %}
+  <h4><font color="lightblue" face="Arial">Не нашли то, что хотели? Воспользуйтесь поиском:</font></h4>
+  <form action="/search">
+    <button type="submit"  class="btn btn-success " >Поиск</button>
+  </form> 
+  <br>
+  <h4><font color="lightblue" face="Arial">Не понимаете что здесь происходит? Ознакомтесь с идеей сайта тут:</font></h4>
+  <form action="http://127.0.0.1:8000">
+    <button type="submit"  class="btn btn-warning">Идея сайта</button>
+  </form> 
+  </div>
+{% endblock %}
